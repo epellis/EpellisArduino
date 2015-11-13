@@ -6,17 +6,25 @@ void setup() {
 
 void loop() {
    int reading = analogRead(sensorPin);
+
+   Serial.print(reading);
+   Serial.println(" analog read");
+
+   int intensity = (reading - 140) * 16;
+
+   Serial.print(intensity);
+   Serial.println(" intensity level");
    
    float voltage = reading * 5.0;
    voltage = voltage/1024;
    
-   Serial.print(voltage);
-   Serial.println(" volts");
+//   Serial.print(voltage);
+//   Serial.println(" volts");
 
    float temperatureC = (voltage - 0.5) * 100;
 
-   Serial.print(temperatureC);
-   Serial.println(" degrees C");
+//   Serial.print(temperatureC);
+//   Serial.println(" degrees C");
 
    float temperatureF = (temperatureC * 9.0 / 5.0) + 32.0;
 
@@ -25,5 +33,3 @@ void loop() {
 
    delay(1000);
 }
-
-public 
