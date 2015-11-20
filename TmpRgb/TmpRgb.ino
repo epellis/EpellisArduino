@@ -3,7 +3,7 @@ int sensorPin = 0;
 int photocellPin = 1;
 
 // Declare the refresh rate of the program
-int interval = 500;
+int interval = 1000;
 
 // Declare what digital pins are outputting rgb values
 int redPin = 9;
@@ -50,13 +50,14 @@ void loop() {
   int photocellReading = analogRead(photocellPin);
   
   // Convert data into usable integers for output on a 0 - 255 scale
-  int intensity = (reading - 140) * 18;
-
+  // Soon to be converted to a logarithmic function
+  int intensity = (reading - (baseTemp * 0.975)) * 17;
+  
   // Set red, green, and blue values to output to an rgb
-  int green = (photocellReading - 960) * 4;
+  int green = (photocellReading - (baseLight * 0.85));
   int blue = 255 - intensity;
   int red = intensity;
-
+  
   // Write rgb values to the light
   analogWrite(redPin, red);
   analogWrite(bluePin, blue);
@@ -65,12 +66,12 @@ void loop() {
   // Read voltage of temperature module and convert it into degrees Celcius
   float voltage = (reading * 5.0)/1024;
   float temperatureC = (voltage - 0.5) * 100;
-
+  
   // Print out data for debugging
   Serial.print("degrees C = ");
   Serial.println(temperatureC);
-  Serial.print("Green = ");
-  Serial.println(green);
+//  Serial.print("Green = ");
+//  Serial.println(green);
   Serial.print("Intensity level = ");
   Serial.println(intensity);
   Serial.println(" ");
