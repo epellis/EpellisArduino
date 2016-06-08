@@ -69,7 +69,7 @@ void printTime() {
   } else if (day() > 1) {
     lcd.print(day());
     lcd.print(" day" + isPlural(day()));
-  } else if (hour() > 1) {
+  } else if (hour() > 0) {
     lcd.print(hour());
     lcd.print(" hour" + isPlural(hour()));
   } else if (minute() > 1) {
