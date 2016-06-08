@@ -10,6 +10,8 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 const int buttonPin = 10;
 int buttonState = 0;
 
+int waitAmount = 1000;
+
 void setup() {
   /* Initialize LCD */
   lcd.begin(16, 2);
@@ -38,7 +40,7 @@ void loop() {
 
   Serial.println(now());
 
-  delay(1000);
+  delay(waitAmount);
   
 }
 
@@ -64,20 +66,26 @@ void printTime() {
   
   /* Find out which time unit is most appropriate */
   if (month() > 1) {
+    waitAmount = 31 * 24 * 3600 * 1000;
     lcd.print(month());
     lcd.print(" month" + isPlural(month()));
   } else if (day() > 1) {
+    waitAmount = 24 * 3600 * 1000;
     lcd.print(day());
     lcd.print(" day" + isPlural(day()));
+    waitAmount = 
   } else if (hour() > 0) {
+    waitAmount = 3600 * 1000;
     lcd.print(hour());
     lcd.print(" hour" + isPlural(hour()));
   } else if (minute() > 1) {
+    waitAmount = 60 * 1000;
     lcd.print(minute());
     lcd.print(" minute" + isPlural(minute()));
   } else {
     lcd.print(second());
     lcd.print(" second" + isPlural(second()));
   }
+  
 }
 
