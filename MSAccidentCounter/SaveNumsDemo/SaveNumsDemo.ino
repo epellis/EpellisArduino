@@ -1,6 +1,6 @@
 #include <EEPROM.h>
 
-/** Generate a set of 10 integers and then store them in EEPROM for retrival */
+/* Generate a set of 10 integers and then store them in EEPROM for retrival */
 void setup() {
   
   Serial.begin(9600);

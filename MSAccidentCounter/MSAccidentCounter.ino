@@ -4,7 +4,6 @@
 #define TIME_HEADER  "T"   // Header tag for serial time sync message
 #define TIME_REQUEST  7    // ASCII bell character requests a time sync message 
 
-/* Initialize pins for LCD */
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
 const int buttonPin = 10;
@@ -13,35 +12,45 @@ int buttonState = 0;
 int waitAmount = 1000;
 
 void setup() {
-  /* Initialize LCD */
   lcd.begin(16, 2);
 
-  /* Initialize button */
   pinMode(buttonPin, INPUT);
 
-  /* Initialize timer */
-  setTime(0);
-
   Serial.begin(9600);
+
+  int memAddress = 0;
+  int timeType = 0; // Indexes through types of time, e.g. seconds is 0, minutes is 1, etc...
+
+  setTime(
 }
 
 void loop() {
-  /* Clear the LCD */
-  lcd.clear();
+//  /* Clear the LCD */
+//  lcd.clear();
+//  
+//  /* Check to see if the button has been pressed */
+//  buttonState = digitalRead(buttonPin);
+//  if (buttonState == HIGH) {
+//      setTime(0); // Reset the timer to zero
+//  }
+//
+//  /* Call the print time method to determine the time and print it */
+//  printTime();
+//
+//  Serial.println(now());
+//
+//  delay(waitAmount);
+//  
+
+}
+
+/* Returns an int from a specified address in EEPROM */
+int getInt() {
+  int readAddress = 0;
   
-  /* Check to see if the button has been pressed */
-  buttonState = digitalRead(buttonPin);
-  if (buttonState == HIGH) {
-      setTime(0); // Reset the timer to zero
-  }
-
-  /* Call the print time method to determine the time and print it */
-  printTime();
-
-  Serial.println(now());
-
-  delay(waitAmount);
-  
+  int num;
+  num = EEPROM.read(readAddress) * 256;
+  num += EEPROM.read(readAddress + 1);
 }
 
 String isPlural(int num) {
@@ -52,6 +61,7 @@ String isPlural(int num) {
   else return "";
 }
 
+/* Method to print essential information */
 void preAmble() {
   lcd.begin(16, 2);
   lcd.print("Accident free");
@@ -61,8 +71,7 @@ void preAmble() {
 
 void printTime() {
 
-  /* Print the preamble */
-  preAmble();
+//  preAmble();
   
   /* Find out which time unit is most appropriate */
   if (month() > 1) {
@@ -88,4 +97,3 @@ void printTime() {
   }
   
 }
-
