@@ -32,6 +32,7 @@ public int[][][] disp = new int[width][height][4];
   public int red;
   public int green;
   public int blue;
+  public int humidLevel;
 
 
 void setup() {
@@ -57,14 +58,18 @@ void generate(int[][][] disp) {
   red = ((temp - minTemp) * 256) / tempRange;
   blue = 256 - red;
   green = blue;
+  humidLevel = ((humidity - minHumidity) * 8 / (humidityRange)) + 1;
+  int randy;
   
   for (int i = 0; i < disp.length; i++) {
     for (int j = 0; j < disp[0].length; j++) {
       
-      disp[i][j][0] = red;// Red
-      disp[i][j][1] = green; // Green
-      disp[i][j][2] = disp[i][j][1]; // Blue
-      disp[i][j][3] = lux; // Alpha
+      randy = (int)(Math.random() * 32) - 16;
+      
+      disp[i][j][0] = red + (randy / 4);// Red
+      disp[i][j][1] = green + randy; // Green
+      disp[i][j][2] = blue - randy; // Blue
+      disp[i][j][3] = lux * (((i % humidLevel) + 1) * ((j % humidLevel) + 1)) / 256; // Alpha
       
       }
     }
@@ -90,7 +95,7 @@ void draw() {
   minHumidity = Math.min(minHumidity, humidity);
   maxHumidity = Math.max(maxHumidity, humidity);
   
-  System.out.print(minTemp + "\t" + temp + "\t" + maxTemp + "\n");
+  //System.out.print(minTemp + "\t" + temp + "\t" + maxTemp + "\n");
   System.out.print(disp[0][0][0] + "\t" + disp[0][0][1] + "\t" + disp[0][0][2] + "\n");
   System.out.println(frameRate);
   System.out.println();
