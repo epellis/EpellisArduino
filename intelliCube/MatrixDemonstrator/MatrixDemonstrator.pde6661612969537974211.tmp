@@ -64,12 +64,12 @@ void generate(int[][][] disp) {
   for (int i = 0; i < disp.length; i++) {
     for (int j = 0; j < disp[0].length; j++) {
       
-      randy = (int)(Math.random() * 64) - 32;
+      randy = (int)(Math.random() * 32) - 16;
       
       disp[i][j][0] = red + (randy / 4);// Red
       disp[i][j][1] = green + randy; // Green
       disp[i][j][2] = blue - randy; // Blue
-      disp[i][j][3] = lux * (lux * ((i % humidLevel) + 1) * ((j % humidLevel) + 1)) / 4096; // Alpha
+      disp[i][j][3] = lux * (((i + 1) % humidLevel) * ((j % humidLevel) + 1)) / 256; // Alpha
       
       }
     }
@@ -95,10 +95,10 @@ void draw() {
   minHumidity = Math.min(minHumidity, humidity);
   maxHumidity = Math.max(maxHumidity, humidity);
   
-  System.out.print(minTemp + "\t" + temp + "\t" + maxTemp + "\n");
-  //System.out.print(disp[0][0][0] + "\t" + disp[0][0][1] + "\t" + disp[0][0][2] + "\n");
-  //System.out.println(frameRate);
-  //System.out.println();
+  //System.out.print(minTemp + "\t" + temp + "\t" + maxTemp + "\n");
+  System.out.print(disp[0][0][0] + "\t" + disp[0][0][1] + "\t" + disp[0][0][2] + "\n");
+  System.out.println(frameRate);
+  System.out.println();
   
   // Generate the next pattern
   generate(disp);
